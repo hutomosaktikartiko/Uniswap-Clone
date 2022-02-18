@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Image from 'next/image'
 import { FiArrowUpRight } from 'react-icons/fi'
 import { AiOutlineDown } from 'react-icons/ai'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
 import ethLogo from '../assets/eth.png'
 import uniswapLogo from '../assets/uniswap.png'
+import { TransactionContext } from '../context/TransactionContext'
 
 const style = {
     wrapper: `p-4 w-screen flex justify-between items-center`,
@@ -19,10 +20,11 @@ const style = {
     buttonTextContainer: `h-8 flex items-center`,
     buttonIconContainer: `flex items-center justify-center w-8 h-8`,
     buttonAccent: `bg-[#172A42] border border-[#163256] hover:border-[#234169] h-full rounded-2xl flex items-center justify-center text-[#4F90EA]`,
-  }
+}
 
 const Header = () => {
     const [selectedNav, setSelectedNav] = useState('swap')
+    const { connectWallet, currentAccount } = useContext(TransactionContext)
 
     return (
         <div className={style.wrapper}>
@@ -33,26 +35,23 @@ const Header = () => {
                 <div className={style.navItemsContainer}>
                     <div
                         onClick={() => setSelectedNav('swap')}
-                        className={`${style.navItem} ${
-                            selectedNav === 'swap' && style.activeNavItem
-                        }`}
-                    > 
+                        className={`${style.navItem} ${selectedNav === 'swap' && style.activeNavItem
+                            }`}
+                    >
                         Swap
                     </div>
                     <div
                         onClick={() => setSelectedNav('pool')}
-                        className={`${style.navItem} ${
-                            selectedNav === 'pool' && style.activeNavItem
-                        }`}
+                        className={`${style.navItem} ${selectedNav === 'pool' && style.activeNavItem
+                            }`}
                     >
                         Pool
                     </div>
-                    <div 
+                    <div
                         onClick={() => setSelectedNav('vote')}
-                        className={`${style.navItem} ${
-                            selectedNav === 'vote' && style.activeNavItem
-                        }`}
-                    > 
+                        className={`${style.navItem} ${selectedNav === 'vote' && style.activeNavItem
+                            }`}
+                    >
                         Vote
                     </div>
                     <a
@@ -76,14 +75,21 @@ const Header = () => {
                         <AiOutlineDown />
                     </div>
                 </div>
-                <div
-                    onClick={() => connectWallet()}
-                    className={`${style.button} ${style.buttonPadding}`}
-                >
-                    <div className={`${style.buttonAccent} ${style.buttonPadding}`}>
-                        Connect Wallet
+                {currentAccount ? (
+                    <div className={`${style.button} ${style.buttonPadding}`}>
+                        <div className={style.buttonTextContainer}>0x....5x</div>
                     </div>
-                </div>
+                ) : (
+                    <div
+                        onClick={() => connectWallet()}
+                        className={`${style.button} ${style.buttonPadding}`}
+                    >
+                        <div className={`${style.buttonAccent} ${style.buttonPadding}`}>
+                            Connect Wallet
+                        </div>
+                    </div>
+                )}
+
                 <div className={`${style.buttin} ${style.buttonPadding}`}>
                     <div className={`${style.buttonIconContainer} mx-2`}>
                         <HiOutlineDotsVertical />
