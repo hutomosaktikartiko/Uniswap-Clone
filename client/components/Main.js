@@ -23,7 +23,6 @@ const Main = () => {
     const { formData, handleChange, sendTransaction } = useContext(TransactionContext)
 
     const handleSubmit = async (e) => {
-        console.log("Submit")
         const { addressTo, amount } = formData
         e.preventDefault()
 
@@ -47,7 +46,7 @@ const Main = () => {
                         className={style.transferPropContainer}
                         placeholder="0.0"
                         pattern="^[0-9]*[.,]?[0-9]*$"
-                        onChange={(e) => { handleChange(e, 'amount') }}
+                        onChange={e => { handleChange(e, 'amount') }}
                     />
                     <div className={style.currencySelector}>
                         <div className={style.currencySelectorContent}>
@@ -64,11 +63,11 @@ const Main = () => {
                         type="text"
                         className={style.transferPropInput}
                         placeholder="0x..."
-                        onChange={(e) => { handleChange(e, 'addressTo') }}
+                        onChange={e => { handleChange(e, 'addressTo') }}
                     />
                     <div className={style.currencySelector}></div>
                 </div>
-                <div onClick={(e) => handleSubmit(e)} className={style.confirmButton}>
+                <div onClick={e => handleSubmit(e)} className={style.confirmButton}>
                     Confirm
                 </div>
             </div>
