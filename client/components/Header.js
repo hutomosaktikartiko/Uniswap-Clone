@@ -24,7 +24,14 @@ const style = {
 
 const Header = () => {
     const [selectedNav, setSelectedNav] = useState('swap')
+    const [userName, setUserName] = useState()
     const { connectWallet, currentAccount } = useContext(TransactionContext)
+
+    useEffect(() => {
+        if (currentAccount) {
+            setUserName(`${currentAccount.slice(0, 7)}...${currentAccount.slice(35)}`,)
+        }
+    }, [currentAccount])
 
     return (
         <div className={style.wrapper}>
@@ -77,7 +84,7 @@ const Header = () => {
                 </div>
                 {currentAccount ? (
                     <div className={`${style.button} ${style.buttonPadding}`}>
-                        <div className={style.buttonTextContainer}>0x....5x</div>
+                        <div className={style.buttonTextContainer}>{userName}</div>
                     </div>
                 ) : (
                     <div
